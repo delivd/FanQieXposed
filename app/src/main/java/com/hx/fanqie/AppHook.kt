@@ -26,7 +26,6 @@ class AppHook : IXposedHookLoadPackage {
                     @Throws(Throwable::class)
                     override fun afterHookedMethod(param: MethodHookParam) {
                         super.afterHookedMethod(param)
-                        Log.e("JSFunc", "isNoAd--->${param.result}")
                         param.result = true
                     }
                 })

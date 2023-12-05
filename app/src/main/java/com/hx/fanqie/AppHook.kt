@@ -1,7 +1,5 @@
 package com.hx.fanqie
 
-import android.R.attr.classLoader
-import android.util.Log
 import de.robv.android.xposed.IXposedHookLoadPackage
 import de.robv.android.xposed.XC_MethodHook
 import de.robv.android.xposed.XposedBridge
@@ -17,7 +15,6 @@ class AppHook : IXposedHookLoadPackage {
             /**
              * 去掉广告 5.9.5版本去广告
              */
-
             try {
                 lpparam.classLoader.loadClass("com.dragon.read.component.biz.impl.g.e")
                 XposedHelpers.findAndHookMethod("com.dragon.read.component.biz.impl.g.e",
@@ -42,8 +39,6 @@ class AppHook : IXposedHookLoadPackage {
             /**
              * 5.9.5 去掉更新
              */
-
-
             try {
                 lpparam.classLoader.loadClass("com.dragon.read.update.d")
                 XposedHelpers.findAndHookMethod(
@@ -90,7 +85,8 @@ class AppHook : IXposedHookLoadPackage {
                 XposedBridge.log("com.dragon.read.component.biz.impl.h.e:${e.message}")
 
             }
-//            5.9.9版本去更新
+
+//            5.9.9 、6.0.3版本去更新
             try {
                 lpparam.classLoader.loadClass("com.dragon.read.update.UpdateManager")
                 XposedHelpers.findAndHookMethod(
@@ -114,7 +110,28 @@ class AppHook : IXposedHookLoadPackage {
 
             }
 
+            //6.0.3 去广告
+            try {
+                lpparam.classLoader.loadClass("com.dragon.read.component.biz.impl.i.e")
+                XposedHelpers.findAndHookMethod("com.dragon.read.component.biz.impl.i.e",
+                    lpparam.classLoader,
+                    "isNoAd",
+                    String::class.java,
+                    object : XC_MethodHook() {
+                        @Throws(Throwable::class)
+                        override fun beforeHookedMethod(param: MethodHookParam) {
+                            super.beforeHookedMethod(param)
+                        }
 
+                        @Throws(Throwable::class)
+                        override fun afterHookedMethod(param: MethodHookParam) {
+                            super.afterHookedMethod(param)
+                        }
+                    })
+            } catch (e: Exception) {
+                XposedBridge.log("com.dragon.read.component.biz.impl.i.e:${e.message}")
+
+            }
         }
     }
 }

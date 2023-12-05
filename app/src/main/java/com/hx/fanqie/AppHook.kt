@@ -1,5 +1,6 @@
 package com.hx.fanqie
 
+import android.R.attr.classLoader
 import de.robv.android.xposed.IXposedHookLoadPackage
 import de.robv.android.xposed.XC_MethodHook
 import de.robv.android.xposed.XposedBridge
@@ -23,11 +24,6 @@ class AppHook : IXposedHookLoadPackage {
                     String::class.java,
                     object : XC_MethodHook() {
                         @Throws(Throwable::class)
-                        override fun beforeHookedMethod(param: MethodHookParam) {
-                            super.beforeHookedMethod(param)
-                        }
-
-                        @Throws(Throwable::class)
                         override fun afterHookedMethod(param: MethodHookParam) {
                             super.afterHookedMethod(param)
                             param.result = true
@@ -46,11 +42,6 @@ class AppHook : IXposedHookLoadPackage {
                     lpparam.classLoader,
                     "b",
                     object : XC_MethodHook() {
-                        @Throws(Throwable::class)
-                        override fun beforeHookedMethod(param: MethodHookParam) {
-                            super.beforeHookedMethod(param)
-                        }
-
                         @Throws(Throwable::class)
                         override fun afterHookedMethod(param: MethodHookParam) {
                             super.afterHookedMethod(param)
@@ -71,11 +62,6 @@ class AppHook : IXposedHookLoadPackage {
                     String::class.java,
                     object : XC_MethodHook() {
                         @Throws(Throwable::class)
-                        override fun beforeHookedMethod(param: MethodHookParam) {
-                            super.beforeHookedMethod(param)
-                        }
-
-                        @Throws(Throwable::class)
                         override fun afterHookedMethod(param: MethodHookParam) {
                             super.afterHookedMethod(param)
                             param.result = true
@@ -94,11 +80,6 @@ class AppHook : IXposedHookLoadPackage {
                     lpparam.classLoader,
                     "b",
                     object : XC_MethodHook() {
-                        @Throws(Throwable::class)
-                        override fun beforeHookedMethod(param: MethodHookParam) {
-                            super.beforeHookedMethod(param)
-                        }
-
                         @Throws(Throwable::class)
                         override fun afterHookedMethod(param: MethodHookParam) {
                             super.afterHookedMethod(param)
@@ -119,13 +100,19 @@ class AppHook : IXposedHookLoadPackage {
                     String::class.java,
                     object : XC_MethodHook() {
                         @Throws(Throwable::class)
-                        override fun beforeHookedMethod(param: MethodHookParam) {
-                            super.beforeHookedMethod(param)
+                        override fun afterHookedMethod(param: MethodHookParam) {
+                            super.afterHookedMethod(param)
                         }
-
+                    })
+                XposedHelpers.findAndHookMethod(
+                    "com.dragon.read.component.biz.impl.i.e",
+                    lpparam.classLoader,
+                    "hasNoAdFollAllScene",
+                    object : XC_MethodHook() {
                         @Throws(Throwable::class)
                         override fun afterHookedMethod(param: MethodHookParam) {
                             super.afterHookedMethod(param)
+                            param.result = true
                         }
                     })
             } catch (e: Exception) {
